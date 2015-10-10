@@ -66,16 +66,16 @@ public class BitcoinMainNetParameters: BitcoinParameters {
 	
 	/// Regex parameter
 	public var compressedWIFHeader: String {
-		//  return "[LK]"	=> Bitcoin
-		//  return "W"	=> Vertcoin
-		return "W"
+		//  return "^[LK]"	=> Bitcoin
+		//  return "^W"	=> Vertcoin
+		return "^W"
 	}
 	
 	/// Regex parameter
 	public var WIFHeader: String {
-		//  return "5"	=> Bitcoin
-		//  return "7"	=> Vertcoin
-		return "7"
+		//  return "^5"	=> Bitcoin
+		//  return "^7"	=> Vertcoin
+		return "^7"
 	}
 
 }
