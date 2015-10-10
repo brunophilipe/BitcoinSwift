@@ -11,7 +11,7 @@ import XCTest
 
 //										8333	=> Bitcoin
 //										5889	=> Vertcoin
-let RCP_PORT = UInt16(8333)
+let RCP_PORT = UInt16(5889)
 
 class PeerConnectionLiveTest: XCTestCase, PeerConnectionDelegate {
   var connectedExpectation: XCTestExpectation!
@@ -22,7 +22,7 @@ class PeerConnectionLiveTest: XCTestCase, PeerConnectionDelegate {
   }
 
   func testConnect() {
-    let conn = PeerConnection(hostname: "136.243.78.3",
+    let conn = PeerConnection(hostname: "localhost",
                               port: RCP_PORT,
                               network: Message.Network.MainNet,
                               delegate: self)

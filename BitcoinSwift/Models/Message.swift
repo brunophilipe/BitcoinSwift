@@ -28,7 +28,8 @@ public struct Message: Equatable {
   /// state is unknown.
   public enum Network: UInt32 {
 //  case MainNet = 0xd9b4Bef9, TestNet = 0xdab5bffa, TestNet3 = 0x0709110b => Bitcoin
-		case MainNet = 0xd9b4Bef9, TestNet = 0xdab5bffa, TestNet3 = 0x0709110b
+//	case MainNet = 0xdab5Bffa, TestNet = 0x76657274												 => Vertcoin
+		case MainNet = 0xdab5Bffa, TestNet = 0x76657274
 
     public var magicBytes: [UInt8] {
       let data = NSMutableData()
