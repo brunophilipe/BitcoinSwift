@@ -55,4 +55,27 @@ public class BitcoinMainNetParameters: BitcoinParameters {
   public var blockChainStoreFileName: String {
     return "blockchain"
   }
+	
+	// MARK: - KeyParameters
+	
+	public var privateKeyHeader: UInt8 {
+		//  return 0x80	=> Bitcoin
+		//  return 0xC7	=> Vertcoin
+		return 0xC7
+	}
+	
+	/// Regex parameter
+	public var compressedWIFHeader: String {
+		//  return "[LK]"	=> Bitcoin
+		//  return "W"	=> Vertcoin
+		return "W"
+	}
+	
+	/// Regex parameter
+	public var WIFHeader: String {
+		//  return "5"	=> Bitcoin
+		//  return "7"	=> Vertcoin
+		return "7"
+	}
+
 }
