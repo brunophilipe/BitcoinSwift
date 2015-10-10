@@ -11,7 +11,9 @@ import Foundation
 import XCTest
 
 private let hostname = "mock_hostname"
-private let port: UInt16 = 8333
+//												 8333 => Bitcoin
+//												 5889 => Vertcoin
+private let port: UInt16 = 5889
 private let network = Message.Network.MainNet
 
 class PeerConnectionTests: XCTestCase {

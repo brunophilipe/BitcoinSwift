@@ -33,14 +33,15 @@ class DummyMessage {
                           nonce: 0x5e9e17ca3e515405,
                           userAgent: "/Satoshi:0.9.1/",
                           blockStartHeight: 172153,
-                          announceRelayedTransactions: true)
+                          announceRelayedTransactions: false) // Disabled (Vertcoin)
   }
 
   static var versionMessageBytes: [UInt8]  = [
-      0xf9, 0xbe, 0xb4, 0xd9,                           // Main network magic bytes
+//		0xf9, 0xbe, 0xb4, 0xd9,                           // Main network magic bytes for Bitcoin
+      0xfa, 0xbf, 0xb5, 0xda,                           // Main network magic bytes for Vertcoin
       0x76, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e, 0x00, 0x00, 0x00, 0x00, 0x00, // "version" command
       0x65, 0x00, 0x00, 0x00,                           // Payload is 101 bytes long
-      0x2f, 0x80, 0x9b, 0xfa,                           // Payload checksum
+      0x4e, 0xd7, 0x18, 0x87,                           // Payload checksum
       0x72, 0x11, 0x01, 0x00,                           // 70002 (protocol version 70002)
       0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,   // 1 (NODE_NETWORK services)
       0x0e, 0x56, 0x05, 0x54, 0x00, 0x00, 0x00, 0x00,   // Timestamp
@@ -54,10 +55,11 @@ class DummyMessage {
       0x0f, 0x2f, 0x53, 0x61, 0x74, 0x6f, 0x73, 0x68,
       0x69, 0x3a, 0x30, 0x2e, 0x39, 0x2e, 0x31, 0x2f,   // sub-version string "/Satoshi:0.9.1/"
       0x79, 0xa0, 0x02, 0x00,                           // Last block #172153
-      0x01]                                             // Relay transactions
+      0x00]                                             // Relay transactions
 
   static var versionMessageBytesWithInvalidChecksum: [UInt8] = [
-      0xf9, 0xbe, 0xb4, 0xd9,                           // Main network magic bytes
+//    0xf9, 0xbe, 0xb4, 0xd9,                         // Main network magic bytes for Bitcoin
+			0xfa, 0xbf, 0xb5, 0xda,                         // Main network magic bytes for Vertcoin
       0x76, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e, 0x00, 0x00, 0x00, 0x00, 0x00, // "version" command
       0x65, 0x00, 0x00, 0x00,                           // Payload is 101 bytes long
       0x2f, 0x80, 0x9b, 0xfb,                           // Payload checksum (invalid)
@@ -74,10 +76,11 @@ class DummyMessage {
       0x0f, 0x2f, 0x53, 0x61, 0x74, 0x6f, 0x73, 0x68,
       0x69, 0x3a, 0x30, 0x2e, 0x39, 0x2e, 0x31, 0x2f,   // sub-version string "/Satoshi:0.9.1/"
       0x79, 0xa0, 0x02, 0x00,                           // Last block #172153
-      0x01]                                             // Relay transactions
+      0x00]                                             // Relay transactions
 
   static var versionAckMessageBytes: [UInt8] = [
-      0xf9, 0xbe, 0xb4, 0xd9,                         // Main network magic bytes
+//    0xf9, 0xbe, 0xb4, 0xd9,                         // Main network magic bytes for Bitcoin
+			0xfa, 0xbf, 0xb5, 0xda,                         // Main network magic bytes for Vertcoin
       0x76, 0x65, 0x72, 0x61, 0x63, 0x6b, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // "versionack" cmd
       0x00, 0x00, 0x00, 0x00,                         // Payload is 0 bytes long
       0x5d, 0xf6, 0xe0, 0xe2]                         // Payload checksum
@@ -85,7 +88,8 @@ class DummyMessage {
   // MARK: - FilteredBlock
 
   static var filteredBlockBytes: [UInt8] = [
-      0x01, 0x00, 0x00, 0x00,                           // version: 1
+//			0x01, 0x00, 0x00, 0x00,                           // version: 1 (Bitcoin)
+			0x02, 0x00, 0x00, 0x00,                           // version: 2 (Vertcoin)
       0x82, 0xbb, 0x86, 0x9c, 0xf3, 0xa7, 0x93, 0x43,
       0x2a, 0x66, 0xe8, 0x26, 0xe0, 0x5a, 0x6f, 0xc3,
       0x74, 0x69, 0xf8, 0xef, 0xb7, 0x42, 0x1d, 0xc8,
@@ -137,7 +141,7 @@ class DummyMessage {
         0x63, 0xd9, 0x8b, 0x2e, 0x96, 0xc5, 0x16, 0x7f]
     let merkleRoot = SHA256Hash(bytes: merkleRootBytes)
     let timestamp = NSDate(timeIntervalSince1970: NSTimeInterval(1293629558))
-    let header = BlockHeader(version: 1,
+    let header = BlockHeader(version: 2, // Vertcoin = 2, Bitcoin = 1
                              previousBlockHash: previousBlockHash,
                              merkleRoot: merkleRoot,
                              timestamp: timestamp,

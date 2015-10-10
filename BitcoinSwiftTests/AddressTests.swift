@@ -20,7 +20,7 @@ class AddressTests: XCTestCase {
     let publicKey = NSData(bytes: publicKeyBytes, length: publicKeyBytes.count)
     let key = ECKey(publicKey: publicKey)
     let address = Address(params: BitcoinMainNetParameters.get(), key: key)
-    XCTAssertEqual(address.stringValue, "1XxXTQbNTVfGvSaLpWYkHUeN3BqHWm7mZ")
+    XCTAssertEqual(address.stringValue, "VaXnSAa3nGPsLhLj5cABBBoW3rUofSHfZs")
   }
 
   func testAddressFromStringValue() {
@@ -30,24 +30,24 @@ class AddressTests: XCTestCase {
         0x36, 0xf0, 0x85, 0xf1]
     let hash160 = NSData(bytes: hash160Bytes, length: hash160Bytes.count)
     let address = Address(params: BitcoinMainNetParameters.get(),
-                          stringValue: "1XxXTQbNTVfGvSaLpWYkHUeN3BqHWm7mZ")!
+                          stringValue: "VaXnSAa3nGPsLhLj5cABBBoW3rUofSHfZs")!
     XCTAssertEqual(address.hash160, hash160)
   }
 
   func testInvalidAddresses() {
     // Left a character off the end.
     var address = Address(params: BitcoinMainNetParameters.get(),
-                          stringValue: "1XxXTQbNTVfGvSaLpWYkHUeN3BqHWm7m")
+                          stringValue: "VaXnSAa3nGPsLhLj5cABBBoW3rUofSHfZ")
     XCTAssertTrue(address == nil)
 
     // Too long to be valid.
     address = Address(params: BitcoinMainNetParameters.get(),
-                      stringValue: "1XxXTQbNTVfGvSaLpWYkHUeN3BqHWm7mfjfjfjfj")
+                      stringValue: "VaXnSAa3nGPsLhLj5cABBBoW3rUofSHfZsfjfjfjfj")
     XCTAssertTrue(address == nil)
 
     // Invalid params.
     address = Address(params: BitcoinTestNetParameters.get(),
-                      stringValue: "1XxXTQbNTVfGvSaLpWYkHUeN3BqHWm7mZ")
+                      stringValue: "VXxXTQbNTVfGvSaLpWYkHUeN3BqHWm7mZ")
     XCTAssertTrue(address == nil)
   }
 }

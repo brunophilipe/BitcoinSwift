@@ -63,6 +63,6 @@ class PeerConnectionLiveTest: XCTestCase, PeerConnectionDelegate {
                           nonce: 0,
                           userAgent: "test",
                           blockStartHeight: 0,
-                          announceRelayedTransactions: true)
+                          announceRelayedTransactions: false) //Disabled (Vertcoin)
   }
 }

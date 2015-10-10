@@ -122,6 +122,7 @@ extension VersionMessage: MessagePayload {
       return nil
     }
 //	Disabled for Vertcoin
+		stream.readBool()
 //  let announceRelayedTransactions = stream.readBool()
 //  if announceRelayedTransactions == nil {
 //    Logger.warn("Failed to parse announceRelayedTransactions from VersionMessage")

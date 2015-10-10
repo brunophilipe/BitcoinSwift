@@ -30,7 +30,8 @@ class MessageTests: XCTestCase {
       0x79, 0xa0, 0x02, 0x00,                           // Last block
       0x01]                                             // Relay transactions
   let messageBytes: [UInt8] = [
-      0xf9, 0xbe, 0xb4, 0xd9,                           // Main network magic bytes
+//		0xf9, 0xbe, 0xb4, 0xd9,                           // Main network magic bytes for Bitcoin
+			0xfa, 0xbf, 0xb5, 0xda,                           // Main network magic bytes for Vertcoin
       0x76, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e, 0x00, 0x00, 0x00, 0x00, 0x00, // "version" command
       0x65, 0x00, 0x00, 0x00,                           // Payload is 101 bytes long
       0x2f, 0x80, 0x9b, 0xfa,                           // Payload checksum

@@ -31,17 +31,23 @@ public class BitcoinMainNetParameters: BitcoinParameters {
   }
 
   public var publicKeyAddressHeader: UInt8 {
-    return 0
+//  return 0		=> Bitcoin
+//  return 0x47	=> Vertcoin
+		return 0x47
   }
 
   public var P2SHAddressHeader: UInt8 {
-    return 5
+//	return 5			=> Bitcoin
+//	return 7			=> Vertcoin
+    return 7
   }
 
   // MARK: - BlockHeaderParameters
 
   public var blockVersion: UInt32 {
-    return 1
+//	return 1			=> Bitcoin
+//	return 2			=> Vertcoin
+		return 2
   }
 
   // MARK: - BlockChainStoreParameters
