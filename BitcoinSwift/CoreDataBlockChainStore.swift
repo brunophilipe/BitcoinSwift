@@ -57,7 +57,7 @@ public class CoreDataBlockChainStore: BlockChainStore {
 
   public var defaultDir: NSURL {
     return NSFileManager.defaultManager().URLsForDirectory(.LibraryDirectory,
-                                                           inDomains: .UserDomainMask)[0] as! NSURL
+                                                           inDomains: .UserDomainMask)[0] 
   }
 
   /// Returns the full path of the sqlite file backing the persistent store.
@@ -65,7 +65,7 @@ public class CoreDataBlockChainStore: BlockChainStore {
   public var URL: NSURL {
     precondition(context != nil)
     let persistentStore = context.persistentStoreCoordinator!.persistentStores[0]
-        as! NSPersistentStore
+        
     return persistentStore.URL!
   }
 
@@ -73,12 +73,16 @@ public class CoreDataBlockChainStore: BlockChainStore {
   /// After calling this function, one of the setUp functions must be called again in order to
   /// continue to use the same object.
   public func deletePersistentStore() -> NSError? {
-    var error: NSError?
-    NSFileManager.defaultManager().removeItemAtPath(URL.absoluteString!, error: &error)
-    if error == nil {
-      context = nil
-    }
-    return error
+    do
+		{
+			try NSFileManager.defaultManager().removeItemAtPath(URL.absoluteString)
+		}
+		catch let error as NSError
+		{
+			context = nil
+			return error
+		}
+    return nil
   }
 
   // MARK: - BlockChainStore
@@ -178,13 +182,16 @@ public class CoreDataBlockChainStore: BlockChainStore {
     let model = NSManagedObjectModel.mergedModelFromBundles([bundle])!
     context = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
     context.persistentStoreCoordinator = NSPersistentStoreCoordinator(managedObjectModel: model)
-    var error: NSError?
-    context.persistentStoreCoordinator!.addPersistentStoreWithType(type as String,
-                                                                   configuration: nil,
-                                                                   URL: URL,
-                                                                   options: nil,
-                                                                   error: &error)
-    if let error = error {
+
+		do
+		{
+			try context.persistentStoreCoordinator!.addPersistentStoreWithType(type as String,
+																																				 configuration: nil,
+																																				 URL: URL,
+																																				 options: nil)
+		}
+    catch let error as NSError
+		{
       Logger.error("Failed to setup CoreDataBlockChainStore \(error)")
       context = nil
       return error
@@ -198,13 +205,19 @@ public class CoreDataBlockChainStore: BlockChainStore {
       -> BlockChainHeaderEntity? {
     let request = NSFetchRequest(entityName: blockChainHeaderEntityName)
     request.predicate = NSPredicate(format: "blockHash == %@", hash.data)
-    if let results = self.context.executeFetchRequest(request, error: error) {
-      assert(results.count <= 1)
-      if results.count > 0 {
-        return (results[0] as! BlockChainHeaderEntity)
-      }
-    }
-    return nil
+		do
+		{
+			let results = try self.context.executeFetchRequest(request)
+			assert(results.count <= 1)
+			if results.count > 0 {
+				return (results[0] as! BlockChainHeaderEntity)
+			}
+		}
+		catch let new_error as NSError
+		{
+			error.memory = new_error
+		}
+		return nil
   }
 
   /// Returns the BlockChainHeaderEntity that is currently the head of the blockchain, or nil if
@@ -212,7 +225,7 @@ public class CoreDataBlockChainStore: BlockChainStore {
   private func fetchBlockChainHeadEntity(error: NSErrorPointer)
       -> BlockChainHeaderEntity? {
     let request = NSFetchRequest(entityName: blockChainHeadEntityName)
-    if let results = self.context.executeFetchRequest(request, error: error) {
+    if let results = try? self.context.executeFetchRequest(request) {
       assert(results.count <= 1)
       if results.count > 0 {
         return (results[0] as! BlockChainHeaderEntity)
@@ -224,8 +237,14 @@ public class CoreDataBlockChainStore: BlockChainStore {
   /// Attempts to save changes to context. If there is an error, all changes to context are undone
   /// and the error is saved to error.
   private func attemptToSave(error: NSErrorPointer) {
-    if context.save(error) == false {
-      self.context.undo()
-    }
+		do
+		{
+			try context.save()
+		}
+		catch let new_error as NSError
+		{
+			self.context.undo()
+			error.memory = new_error
+		}
   }
 }

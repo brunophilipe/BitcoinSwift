@@ -12,15 +12,15 @@ public func ==(left: SecureData, right: SecureData) -> Bool {
   return left.mutableData == right.mutableData
 }
 
-extension SecureData: Equatable {
+extension SecureData {
 
   public subscript(subRange: Range<Int>) -> SecureData {
     precondition(subRange.startIndex >= 0 && subRange.startIndex < mutableData.length)
     precondition(subRange.endIndex > subRange.startIndex &&
         subRange.endIndex <= mutableData.length)
     let length = subRange.endIndex - subRange.startIndex
-    let range = NSRange(location: subRange.startIndex, length: length)
-    var subData = SecureData(length: UInt(length))
+//    let range = NSRange(location: subRange.startIndex, length: length)
+    let subData = SecureData(length: UInt(length))
     memcpy(subData.mutableBytes, mutableBytes.advancedBy(subRange.startIndex), length)
     return subData
   }
@@ -40,7 +40,7 @@ extension SecureData {
   }
 
   public func HMACSHA512WithKeyData(key: NSData) -> SecureData {
-    var digest = SecureData(length: 64)
+    let digest = SecureData(length: 64)
     mutableData.HMACSHA512WithKey(key, digest: digest.mutableData)
     return digest
   }

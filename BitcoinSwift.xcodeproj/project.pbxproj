@@ -511,7 +511,9 @@
 				0A2D51C419777320009B6B25 /* BitcoinSwiftLiveTests */,
 				0A52ACCC195397080041541B /* Products */,
 			);
+			indentWidth = 2;
 			sourceTree = "<group>";
+			tabWidth = 2;
 		};
 		0A52ACCC195397080041541B /* Products */ = {
 			isa = PBXGroup;
@@ -852,6 +854,8 @@
 		0A52ACC2195397080041541B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0700;
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = DoubleSha;
 				TargetAttributes = {
