@@ -9,6 +9,8 @@
 import BitcoinSwift
 import XCTest
 
+let RCP_PORT = UInt16(5889)
+
 class PeerConnectionLiveTest: XCTestCase, PeerConnectionDelegate {
   var connectedExpectation: XCTestExpectation!
 
@@ -19,7 +21,7 @@ class PeerConnectionLiveTest: XCTestCase, PeerConnectionDelegate {
 
   func testConnect() {
     let conn = PeerConnection(hostname: "localhost",
-                              port: 8333,
+                              port: RCP_PORT,
                               network: Message.Network.MainNet,
                               delegate: self)
     conn.connectWithVersionMessage(dummyVersionMessage(), timeout: 10)
@@ -50,7 +52,7 @@ class PeerConnectionLiveTest: XCTestCase, PeerConnectionDelegate {
   func dummyVersionMessage() -> VersionMessage {
     let emptyPeerAddress = PeerAddress(services: PeerServices.NodeNetwork,
                                        IP: IPAddress.IPV4(0),
-                                       port: 8333)
+                                       port: RCP_PORT)
     return VersionMessage(protocolVersion: 70002,
                           services: PeerServices.NodeNetwork,
                           date: NSDate(),

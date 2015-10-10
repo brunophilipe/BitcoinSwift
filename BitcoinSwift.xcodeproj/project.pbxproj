@@ -255,6 +255,7 @@
 		0AF07C761A09ECBD00A0C9F1 /* RejectMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF07C751A09ECBD00A0C9F1 /* RejectMessageTests.swift */; };
 		0AF07C771A09ECBD00A0C9F1 /* RejectMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF07C751A09ECBD00A0C9F1 /* RejectMessageTests.swift */; };
 		0AF9C6F11960D51F009F281D /* NSMutableData+BitcoinEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF9C6F01960D51F009F281D /* NSMutableData+BitcoinEncoding.swift */; };
+		158694D41BC9219C00BC806B /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 158694D31BC9219C00BC806B /* CoreData.framework */; };
 		D845F45419D7A5FB00346A25 /* PongMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D845F45319D7A5FB00346A25 /* PongMessageTests.swift */; };
 		D862844D19AA7C0500CFCE80 /* PeerConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF9C6EE195E134C009F281D /* PeerConnection.swift */; };
 		D862845119AA7C0700CFCE80 /* PeerConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF9C6EE195E134C009F281D /* PeerConnection.swift */; };
@@ -430,6 +431,7 @@
 		0AF0E6C4196BAF5A007BC06F /* VersionMessageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VersionMessageTests.swift; sourceTree = "<group>"; };
 		0AF9C6EE195E134C009F281D /* PeerConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeerConnection.swift; sourceTree = "<group>"; };
 		0AF9C6F01960D51F009F281D /* NSMutableData+BitcoinEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSMutableData+BitcoinEncoding.swift"; sourceTree = "<group>"; };
+		158694D31BC9219C00BC806B /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		D810F30819B50155009EE349 /* GetDataMessageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetDataMessageTests.swift; sourceTree = "<group>"; };
 		D845F45319D7A5FB00346A25 /* PongMessageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PongMessageTests.swift; sourceTree = "<group>"; };
 		D8BA343E19D74E0E00A1232F /* NotFoundMessageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotFoundMessageTests.swift; sourceTree = "<group>"; };
@@ -448,6 +450,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				158694D41BC9219C00BC806B /* CoreData.framework in Frameworks */,
 				0A52ACF2195399FA0041541B /* libcrypto.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -505,6 +508,7 @@
 		0A52ACC1195397080041541B = {
 			isa = PBXGroup;
 			children = (
+				158694D31BC9219C00BC806B /* CoreData.framework */,
 				0AF075FC19A9293D00BEC64D /* Libraries */,
 				0A52ACCD195397080041541B /* BitcoinSwift */,
 				0A52ACDA195397080041541B /* BitcoinSwiftTests */,
@@ -856,7 +860,7 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = DoubleSha;
 				TargetAttributes = {
 					0A2D51C219777320009B6B25 = {
@@ -865,6 +869,7 @@
 					};
 					0A52ACCA195397080041541B = {
 						CreatedOnToolsVersion = 6.0;
+						DevelopmentTeam = R85D3K8ATT;
 					};
 					0A52ACD5195397080041541B = {
 						CreatedOnToolsVersion = 6.0;
@@ -1267,6 +1272,7 @@
 				INFOPLIST_FILE = BitcoinSwiftLiveTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				METAL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.DoubleSha.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1281,6 +1287,7 @@
 				INFOPLIST_FILE = BitcoinSwiftLiveTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				METAL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.DoubleSha.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -1306,7 +1313,9 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1358,6 +1367,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1387,6 +1397,7 @@
 			buildSettings = {
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1398,6 +1409,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Dependencies/Libraries",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.brunophilipe.BitcoinSwift;
 				PRODUCT_NAME = BitcoinSwift;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1409,6 +1421,7 @@
 			buildSettings = {
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1420,6 +1433,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Dependencies/Libraries",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.brunophilipe.BitcoinSwift;
 				PRODUCT_NAME = BitcoinSwift;
 				SKIP_INSTALL = YES;
 			};
@@ -1439,6 +1453,7 @@
 				INFOPLIST_FILE = BitcoinSwiftTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				METAL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.DoubleSha.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1453,6 +1468,7 @@
 				INFOPLIST_FILE = BitcoinSwiftTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				METAL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.DoubleSha.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -1480,6 +1496,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.DoubleSha.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = BitcoinSwift;
 				SDKROOT = macosx;
 				SKIP_INSTALL = NO;
@@ -1506,6 +1523,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.DoubleSha.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = BitcoinSwift;
 				SDKROOT = macosx;
 				SKIP_INSTALL = NO;
@@ -1528,6 +1546,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.DoubleSha.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
@@ -1546,6 +1565,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.DoubleSha.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
@@ -1567,6 +1587,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.DoubleSha.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
@@ -1585,6 +1606,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.DoubleSha.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};

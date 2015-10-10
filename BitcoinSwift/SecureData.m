@@ -52,6 +52,16 @@
   return self;
 }
 
+- (BOOL)isEqual:(id)object
+{
+	if ([object isKindOfClass:[SecureData class]])
+	{
+		SecureData *dataObject = object;
+		return [[self mutableData] isEqualToData:[dataObject mutableData]];
+	}
+	return NO;
+}
+
 - (NSData *)data {
   return _mutableData;
 }
