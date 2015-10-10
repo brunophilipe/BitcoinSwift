@@ -121,6 +121,7 @@ extension VersionMessage: MessagePayload {
       Logger.warn("Failed to parse blockStartHeight from VersionMessage")
       return nil
     }
+//	Disabled for Vertcoin
 //  let announceRelayedTransactions = stream.readBool()
 //  if announceRelayedTransactions == nil {
 //    Logger.warn("Failed to parse announceRelayedTransactions from VersionMessage")
