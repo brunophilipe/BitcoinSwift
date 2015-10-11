@@ -19,7 +19,7 @@ class AddressTests: XCTestCase {
         0x68, 0x75, 0x3e, 0xd2, 0xde, 0x14, 0xa3, 0x4b, 0x2a]
     let publicKey = NSData(bytes: publicKeyBytes, length: publicKeyBytes.count)
     let key = ECKey(publicKey: publicKey)
-    let address = Address(params: BitcoinMainNetParameters.get(), key: key)
+    let address = Address(params: VertcoinMainNetParameters.get(), key: key)
     XCTAssertEqual(address.stringValue, "VaXnSAa3nGPsLhLj5cABBBoW3rUofSHfZs")
   }
 
@@ -29,19 +29,19 @@ class AddressTests: XCTestCase {
         0x2e, 0x65, 0x09, 0xeb, 0x42, 0xd9, 0x0b, 0xa0,
         0x36, 0xf0, 0x85, 0xf1]
     let hash160 = NSData(bytes: hash160Bytes, length: hash160Bytes.count)
-    let address = Address(params: BitcoinMainNetParameters.get(),
+    let address = Address(params: VertcoinMainNetParameters.get(),
                           stringValue: "VaXnSAa3nGPsLhLj5cABBBoW3rUofSHfZs")!
     XCTAssertEqual(address.hash160, hash160)
   }
 
   func testInvalidAddresses() {
     // Left a character off the end.
-    var address = Address(params: BitcoinMainNetParameters.get(),
+    var address = Address(params: VertcoinMainNetParameters.get(),
                           stringValue: "VaXnSAa3nGPsLhLj5cABBBoW3rUofSHfZ")
     XCTAssertTrue(address == nil)
 
     // Too long to be valid.
-    address = Address(params: BitcoinMainNetParameters.get(),
+    address = Address(params: VertcoinMainNetParameters.get(),
                       stringValue: "VaXnSAa3nGPsLhLj5cABBBoW3rUofSHfZsfjfjfjfj")
     XCTAssertTrue(address == nil)
 

@@ -256,6 +256,10 @@
 		0AF07C771A09ECBD00A0C9F1 /* RejectMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF07C751A09ECBD00A0C9F1 /* RejectMessageTests.swift */; };
 		0AF9C6F11960D51F009F281D /* NSMutableData+BitcoinEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF9C6F01960D51F009F281D /* NSMutableData+BitcoinEncoding.swift */; };
 		158694D41BC9219C00BC806B /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 158694D31BC9219C00BC806B /* CoreData.framework */; };
+		1586965F1BCA68E900BC806B /* VertcoinMainNetParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1586965E1BCA68E900BC806B /* VertcoinMainNetParameters.swift */; settings = {ASSET_TAGS = (); }; };
+		158696621BCA68E900BC806B /* VertcoinMainNetParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1586965E1BCA68E900BC806B /* VertcoinMainNetParameters.swift */; settings = {ASSET_TAGS = (); }; };
+		158696661BCA6ACC00BC806B /* LitecoinMainNetParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158696651BCA6ACC00BC806B /* LitecoinMainNetParameters.swift */; settings = {ASSET_TAGS = (); }; };
+		158696671BCA6ACC00BC806B /* LitecoinMainNetParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158696651BCA6ACC00BC806B /* LitecoinMainNetParameters.swift */; settings = {ASSET_TAGS = (); }; };
 		D845F45419D7A5FB00346A25 /* PongMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D845F45319D7A5FB00346A25 /* PongMessageTests.swift */; };
 		D862844D19AA7C0500CFCE80 /* PeerConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF9C6EE195E134C009F281D /* PeerConnection.swift */; };
 		D862845119AA7C0700CFCE80 /* PeerConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF9C6EE195E134C009F281D /* PeerConnection.swift */; };
@@ -433,6 +437,8 @@
 		0AF9C6F01960D51F009F281D /* NSMutableData+BitcoinEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSMutableData+BitcoinEncoding.swift"; sourceTree = "<group>"; };
 		158694D31BC9219C00BC806B /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		158696591BC9CB7200BC806B /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
+		1586965E1BCA68E900BC806B /* VertcoinMainNetParameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VertcoinMainNetParameters.swift; sourceTree = "<group>"; };
+		158696651BCA6ACC00BC806B /* LitecoinMainNetParameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LitecoinMainNetParameters.swift; sourceTree = "<group>"; };
 		D810F30819B50155009EE349 /* GetDataMessageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetDataMessageTests.swift; sourceTree = "<group>"; };
 		D845F45319D7A5FB00346A25 /* PongMessageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PongMessageTests.swift; sourceTree = "<group>"; };
 		D8BA343E19D74E0E00A1232F /* NotFoundMessageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotFoundMessageTests.swift; sourceTree = "<group>"; };
@@ -536,8 +542,8 @@
 		0A52ACCD195397080041541B /* BitcoinSwift */ = {
 			isa = PBXGroup;
 			children = (
-				0A52ACCE195397080041541B /* Supporting Files */,
 				0AC17A6F19E50869000E4942 /* Models */,
+				0A52ACCE195397080041541B /* Supporting Files */,
 				0AE757401A2AB4EE0084FD6F /* BigInteger.h */,
 				0AE757411A2AB4EE0084FD6F /* BigInteger.m */,
 				0A83CDF81A49F1D70074A4CE /* BigInteger+objc.h */,
@@ -545,9 +551,9 @@
 				0A84E5F71A2B054E0070238D /* BigInteger+Operators.swift */,
 				0A5694A01A68D91D00C5DE2F /* BitcoinMainNetParameters.swift */,
 				0A5694A61A68DB0800C5DE2F /* BitcoinParameters.swift */,
-				0A5694A31A68DAE800C5DE2F /* BitcoinTestNetParamaters.swift */,
 				0A4BBC451A0DCDD000838450 /* BitcoinSerializable.swift */,
 				0A52ACD0195397080041541B /* BitcoinSwift.h */,
+				0A5694A31A68DAE800C5DE2F /* BitcoinTestNetParamaters.swift */,
 				0AE757371A2A674B0084FD6F /* BlockChainStore.swift */,
 				0A4789E51AA1A3BC00F2F883 /* BlockChainStore.xcdatamodeld */,
 				0A4789D21A8B0C6000F2F883 /* CoreDataBlockChainStore.swift */,
@@ -566,8 +572,8 @@
 				0A52ACF81953A7690041541B /* NSData+Hashing.h */,
 				0A52ACFA1953A79B0041541B /* NSData+Hashing.m */,
 				0A9439AA1A4A6E43009992CE /* NSData+StringEncoding.swift */,
-				0AF9C6F01960D51F009F281D /* NSMutableData+BitcoinEncoding.swift */,
 				0A34DF62196118DE007BBC35 /* NSInputStream+BitcoinDecoding.swift */,
+				0AF9C6F01960D51F009F281D /* NSMutableData+BitcoinEncoding.swift */,
 				0A5694B81A78AF7900C5DE2F /* OSKeyChainSecureDataStore.swift */,
 				0AACF9C91B311FE700C560B7 /* PartialMerkleTree.swift */,
 				0AF9C6EE195E134C009F281D /* PeerConnection.swift */,
@@ -583,6 +589,8 @@
 				0AB30D2B1A58A91C0079D9C9 /* SecureMemoryAllocator.m */,
 				0A0514841A4CBB3D006E1377 /* String+Reverse.swift */,
 				0AECD0D119AACA5400C11AC9 /* Thread.swift */,
+				1586965E1BCA68E900BC806B /* VertcoinMainNetParameters.swift */,
+				158696651BCA6ACC00BC806B /* LitecoinMainNetParameters.swift */,
 			);
 			path = BitcoinSwift;
 			sourceTree = "<group>";
@@ -993,6 +1001,7 @@
 				0A627FC21A33B5BF00170C31 /* SHA256Hash.swift in Sources */,
 				0AF07C731A09EC9400A0C9F1 /* RejectMessage.swift in Sources */,
 				0AC17A9419E508B2000E4942 /* GetHeadersMessage.swift in Sources */,
+				1586965F1BCA68E900BC806B /* VertcoinMainNetParameters.swift in Sources */,
 				0AC17A9E19E508B2000E4942 /* MessageHeader.swift in Sources */,
 				0AB631A21A5E57D300B2ABD6 /* SecureBigInteger.m in Sources */,
 				0A78125019C4D41300187B9A /* MessageParser.swift in Sources */,
@@ -1000,6 +1009,7 @@
 				0A52ACEC1953979F0041541B /* ECKey.m in Sources */,
 				D862844D19AA7C0500CFCE80 /* PeerConnection.swift in Sources */,
 				0AE757381A2A674B0084FD6F /* BlockChainStore.swift in Sources */,
+				158696661BCA6ACC00BC806B /* LitecoinMainNetParameters.swift in Sources */,
 				0AC17A9019E508B2000E4942 /* GetBlocksMessage.swift in Sources */,
 				0AB30D2E1A58A91C0079D9C9 /* SecureMemoryAllocator.m in Sources */,
 				0AACF9CA1B311FE700C560B7 /* PartialMerkleTree.swift in Sources */,
@@ -1123,6 +1133,7 @@
 				0A627FC31A33B5BF00170C31 /* SHA256Hash.swift in Sources */,
 				0AF07C741A09EC9400A0C9F1 /* RejectMessage.swift in Sources */,
 				0AC17A9F19E508B2000E4942 /* MessageHeader.swift in Sources */,
+				158696621BCA68E900BC806B /* VertcoinMainNetParameters.swift in Sources */,
 				0AC17A8B19E508B2000E4942 /* Address.swift in Sources */,
 				0AB631A31A5E57D300B2ABD6 /* SecureBigInteger.m in Sources */,
 				0AC17A9D19E508B2000E4942 /* Message.swift in Sources */,
@@ -1130,6 +1141,7 @@
 				0AC8CF3C19A9369F00D93585 /* NSInputStream+BitcoinDecoding.swift in Sources */,
 				0AC8CF3D19A9369F00D93585 /* Endianness.swift in Sources */,
 				0AC17A9119E508B2000E4942 /* GetBlocksMessage.swift in Sources */,
+				158696671BCA6ACC00BC806B /* LitecoinMainNetParameters.swift in Sources */,
 				0AE757391A2A674B0084FD6F /* BlockChainStore.swift in Sources */,
 				0AB30D2F1A58A91C0079D9C9 /* SecureMemoryAllocator.m in Sources */,
 				0AACF9CB1B311FE700C560B7 /* PartialMerkleTree.swift in Sources */,

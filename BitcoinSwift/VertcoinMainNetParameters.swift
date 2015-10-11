@@ -1,5 +1,5 @@
 //
-//  BitcoinMainNetParameters.swift
+//  VertcoinMainNetParameters.swift
 //  BitcoinSwift
 //
 //  Created by Kevin Greene on 1/15/15.
@@ -8,12 +8,12 @@
 
 import Foundation
 
-public class BitcoinMainNetParameters: BitcoinParameters {
+public class VertcoinMainNetParameters: BitcoinParameters {
 
-  public class func get() -> BitcoinMainNetParameters {
+  public class func get() -> VertcoinMainNetParameters {
     // TODO: Remove this once Swift supports class vars.
     struct Static {
-      static let instance = BitcoinMainNetParameters()
+      static let instance = VertcoinMainNetParameters()
     }
     return Static.instance
   }
@@ -31,17 +31,17 @@ public class BitcoinMainNetParameters: BitcoinParameters {
   }
 
   public var publicKeyAddressHeader: UInt8 {
-		return 0
+		return 0x47
   }
 
   public var P2SHAddressHeader: UInt8 {
-    return 5
+    return 7
   }
 
   // MARK: - BlockHeaderParameters
 
   public var blockVersion: UInt32 {
-		return 1
+		return 2
   }
 
   // MARK: - BlockChainStoreParameters
@@ -53,17 +53,17 @@ public class BitcoinMainNetParameters: BitcoinParameters {
 	// MARK: - KeyParameters
 	
 	public var privateKeyHeader: UInt8 {
-		return 0x80
+		return 0xC7
 	}
 	
 	/// Regex parameter
 	public var compressedWIFHeader: String {
-		return "^[LK]"
+		return "^W"
 	}
 	
 	/// Regex parameter
 	public var WIFHeader: String {
-		return "^5"
+		return "^7"
 	}
 
 }
