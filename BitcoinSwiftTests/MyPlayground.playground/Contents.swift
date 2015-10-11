@@ -29,5 +29,42 @@ func base58EncodedKey(compressed pCompressed: Bool) -> String
 	return WIFData.base58String
 }
 
+func __decodeBase58Key(pKey: String, compressed pCompressed: Bool) -> SecureData?
+{
+	if let lRawData = NSData.fromBase58String(pKey)
+	{
+		let lCompressedByte = lRawData.subdataWithRange(NSMakeRange(33, 1)).hexString
+		
+		if pCompressed
+		{
+			guard lCompressedByte == "01" else
+			{
+				NSLog("Malformed key: Compression byte does not match!!")
+				return nil
+			}
+		}
+		
+		let lKeyData = lRawData.subdataWithRange(NSMakeRange(0, pCompressed ? 34 : 33))
+		let lRawChecksum = lRawData.subdataWithRange(NSMakeRange(pCompressed ? 34 : 33, 4))
+		let lKeyChecksum = lKeyData.SHA256Hash().SHA256Hash().subdataWithRange(NSMakeRange(0, 4))
+		
+		guard lRawChecksum == lKeyChecksum else
+		{
+			NSLog("Malformed key: Checksum does not match!!")
+			return nil
+		}
+		
+		let lKeyBytes = lRawData.subdataWithRange(NSMakeRange(1, 32))
+		
+		return SecureData(data: lKeyBytes)
+	}
+	
+	NSLog("Malformed key: Bad base58 format!!")
+	return nil
+}
+
 base58EncodedKey(compressed: true)
 base58EncodedKey(compressed: false)
+
+__decodeBase58Key("WSd1YXoFfTzu43nfiyRbb4LBu1TeEh1whEHa8sUaCtCyxVcNqYWH", compressed: true)?.data
+__decodeBase58Key("7ftCuTTnv82LVnVUMPJMXNbhz6YQqsJS5api3EhghJVYUzE1VAM", compressed: false)?.data
