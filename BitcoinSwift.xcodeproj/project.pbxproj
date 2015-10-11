@@ -666,43 +666,26 @@
 		0AC17A6F19E50869000E4942 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				1586966A1BCA882900BC806B /* MessagePayloads */,
 				0AC17A7119E508B2000E4942 /* Address.swift */,
 				0A110DE719E8FDDE00CBFCAC /* Alert.swift */,
-				0A110DDE19E8F7BB00CBFCAC /* AlertMessage.swift */,
 				0AC17A7219E508B2000E4942 /* Block.swift */,
 				0AE7573D1A2A71D50084FD6F /* BlockChainHeader.swift */,
 				0A4789D91A8B1A4E00F2F883 /* BlockChainHeaderEntity.swift */,
 				0AC17A7319E508B2000E4942 /* BlockHeader.swift */,
-				0A435A7619F2CB6700FE2689 /* FilterAddMessage.swift */,
-				0A26BA4819F0EFAB00278622 /* FilterClearMessage.swift */,
 				0A56A73219FCEB6C00F163BD /* FilteredBlock.swift */,
-				0A435A7019F2C4FB00FE2689 /* FilterLoadMessage.swift */,
-				0AC17A7419E508B2000E4942 /* GetBlocksMessage.swift */,
-				0AC17A7519E508B2000E4942 /* GetDataMessage.swift */,
-				0AC17A7619E508B2000E4942 /* GetHeadersMessage.swift */,
-				0A1C534619EB132E00D27206 /* GetPeerAddressMessage.swift */,
-				0A1C534C19EE538700D27206 /* HeadersMessage.swift */,
-				0AC17A7719E508B2000E4942 /* InventoryMessage.swift */,
 				0AC17A7819E508B2000E4942 /* InventoryVector.swift */,
 				0AC17A7919E508B2000E4942 /* IPAddress.swift */,
-				0A1C534919EE480000D27206 /* MemPoolMessage.swift */,
 				0AC17A7A19E508B2000E4942 /* Message.swift */,
 				0AC17A7B19E508B2000E4942 /* MessageHeader.swift */,
-				0AC17A7C19E508B2000E4942 /* NotFoundMessage.swift */,
 				0AC17A7D19E508B2000E4942 /* PeerAddress.swift */,
-				0AC17A7019E508B2000E4942 /* PeerAddressMessage.swift */,
 				0AC17A7E19E508B2000E4942 /* PeerServices.swift */,
-				0AC17A7F19E508B2000E4942 /* PingMessage.swift */,
-				0AC17A8019E508B2000E4942 /* PongMessage.swift */,
-				0AF07C721A09EC9400A0C9F1 /* RejectMessage.swift */,
 				0A627FC11A33B5BF00170C31 /* SHA256Hash.swift */,
 				0AC17A8119E508B2000E4942 /* Transaction.swift */,
 				0AC17A8219E508B2000E4942 /* TransactionInput.swift */,
 				0AC17A8419E508B2000E4942 /* TransactionLockTime.swift */,
 				0AC17A8319E508B2000E4942 /* TransactionOutPoint.swift */,
 				0AC17A8519E508B2000E4942 /* TransactionOutput.swift */,
-				0AC17A8619E508B2000E4942 /* VersionAckMessage.swift */,
-				0AC17A8719E508B2000E4942 /* VersionMessage.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -714,6 +697,31 @@
 			);
 			name = Libraries;
 			path = Dependencies/Libraries;
+			sourceTree = "<group>";
+		};
+		1586966A1BCA882900BC806B /* MessagePayloads */ = {
+			isa = PBXGroup;
+			children = (
+				0A110DDE19E8F7BB00CBFCAC /* AlertMessage.swift */,
+				0A435A7619F2CB6700FE2689 /* FilterAddMessage.swift */,
+				0A26BA4819F0EFAB00278622 /* FilterClearMessage.swift */,
+				0A435A7019F2C4FB00FE2689 /* FilterLoadMessage.swift */,
+				0AC17A7419E508B2000E4942 /* GetBlocksMessage.swift */,
+				0AC17A7519E508B2000E4942 /* GetDataMessage.swift */,
+				0AC17A7619E508B2000E4942 /* GetHeadersMessage.swift */,
+				0A1C534619EB132E00D27206 /* GetPeerAddressMessage.swift */,
+				0A1C534C19EE538700D27206 /* HeadersMessage.swift */,
+				0AC17A7719E508B2000E4942 /* InventoryMessage.swift */,
+				0A1C534919EE480000D27206 /* MemPoolMessage.swift */,
+				0AC17A7C19E508B2000E4942 /* NotFoundMessage.swift */,
+				0AC17A7019E508B2000E4942 /* PeerAddressMessage.swift */,
+				0AC17A7F19E508B2000E4942 /* PingMessage.swift */,
+				0AC17A8019E508B2000E4942 /* PongMessage.swift */,
+				0AF07C721A09EC9400A0C9F1 /* RejectMessage.swift */,
+				0AC17A8619E508B2000E4942 /* VersionAckMessage.swift */,
+				0AC17A8719E508B2000E4942 /* VersionMessage.swift */,
+			);
+			name = MessagePayloads;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
