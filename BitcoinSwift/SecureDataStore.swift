@@ -16,7 +16,7 @@ public protocol SecureDataStore {
 
   /// Saves the data, indexed by the given key. This must only be called if there is not a value
   /// already present with the same key.
-  func saveData(data: SecureData, forKey key: String) -> Bool
+  func saveData(data: SecureData, forKey key: String) -> OSStatus
 
   /// Deletes the data for the given key. This must only be called if a value exists for the given
   /// key.

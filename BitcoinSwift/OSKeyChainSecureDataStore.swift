@@ -38,7 +38,7 @@ public class OSKeyChainSecureDataStore: SecureDataStore {
     return secureData
   }
 
-  public func saveData(data: SecureData, forKey key: String) -> Bool {
+  public func saveData(data: SecureData, forKey key: String) -> OSStatus {
     precondition(dataForKey(key) == nil, "SecureData already exists with for key \(key)")
     let item = NSMutableDictionary()
     // This prevents the key from being copied to Apple servers.
@@ -48,7 +48,7 @@ public class OSKeyChainSecureDataStore: SecureDataStore {
     item.setObject(service, forKey: "\(kSecAttrService)")
     item.setObject(key, forKey: "\(kSecAttrAccount)")
     item.setObject(data.data, forKey: "\(kSecValueData)")
-    return SecItemAdd(item, nil) == noErr
+    return SecItemAdd(item, nil)
   }
 
   public func deleteDataForKey(key: String) -> Bool {

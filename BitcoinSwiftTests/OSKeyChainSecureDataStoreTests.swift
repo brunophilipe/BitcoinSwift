@@ -31,7 +31,7 @@ class OSKeyChainSecureDataStoreTests: XCTestCase {
   func testStoreSecureData() {
     let bytes: [UInt8] = [0x00, 0x01, 0x02, 0x03]
     let data = SecureData(bytes: bytes, length: UInt(bytes.count))
-    XCTAssertTrue(secureDataStore.saveData(data, forKey: key))
+    XCTAssertEqual(secureDataStore.saveData(data, forKey: key), noErr)
     XCTAssertEqual(secureDataStore.dataForKey(key)!, data)
     secureDataStore.deleteDataForKey(key)
     XCTAssertTrue(secureDataStore.dataForKey(key) == nil)
