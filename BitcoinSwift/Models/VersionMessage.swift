@@ -121,10 +121,10 @@ extension VersionMessage: MessagePayload {
       Logger.warn("Failed to parse blockStartHeight from VersionMessage")
       return nil
     }
-    let announceRelayedTransactions = stream.readBool()
+    var announceRelayedTransactions = stream.readBool()
     if announceRelayedTransactions == nil {
-      Logger.warn("Failed to parse announceRelayedTransactions from VersionMessage")
-      return nil
+      Logger.info("Failed to parse announceRelayedTransactions from VersionMessage: Assuming false")
+      announceRelayedTransactions = false
     }
     return VersionMessage(protocolVersion: protocolVersion!,
                           services: services,
