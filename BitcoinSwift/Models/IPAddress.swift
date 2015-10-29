@@ -31,6 +31,27 @@ public enum IPAddress: Equatable {
 
 extension IPAddress: BitcoinSerializable {
 
+  public var asHostname: String? {
+    var hostname: String? = nil
+    var components = [String]()
+    
+    switch self {
+    case .IPV4(let word):
+      for i in [3, 2, 1, 0] {
+        components.append(String(format: "%d", Int(word >> UInt32(i * 8) & 0x000000FF)))
+      }
+      hostname = components.joinWithSeparator(".")
+    case .IPV6(let word0, let word1, let word2, let word3):
+      for word in [word0, word1, word2, word3] {
+        components.append(String(format: "%x:%x", word >> 16, word & 0x0000FFFF))
+      }
+      hostname = components.joinWithSeparator(":")
+      break
+    }
+    
+    return hostname
+  }
+  
   public var bitcoinData: NSData {
     let data = NSMutableData()
     // An IPAddress is encoded as 4 32-bit words. IPV4 addresses are encoded as IPV4-in-IPV6

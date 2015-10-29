@@ -24,6 +24,7 @@ class IPAddressTests: XCTestCase {
 
   let IPV4 = IPAddress.IPV4(0x01020304)
   let IPV6 = IPAddress.IPV6(0x01020304, 0x11121314, 0x21222324, 0x31323334)
+  let IPV6_short = IPAddress.IPV6(0x20010db8, 0x00000042, 0x00008a2e, 0x03707334)
 
   override func setUp() {
     super.setUp()
@@ -37,6 +38,15 @@ class IPAddressTests: XCTestCase {
 
   func testIPV6AddressEncoding() {
     XCTAssertEqual(IPV6.bitcoinData, IPV6Data)
+  }
+  
+  func testIPV4AddressToString() {
+    XCTAssertEqual(IPV4.asHostname, "1.2.3.4")
+  }
+  
+  func testIPV6AddressToString() {
+    XCTAssertEqual(IPV6.asHostname, "102:304:1112:1314:2122:2324:3132:3334")
+    XCTAssertEqual(IPV6_short.asHostname, "2001:db8:0:42:0:8a2e:370:7334")
   }
 
   func testIPV4AddressDecoding() {
