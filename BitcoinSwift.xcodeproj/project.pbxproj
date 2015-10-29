@@ -63,8 +63,8 @@
 		0A4789E81AA1A3BC00F2F883 /* BlockChainStore.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0A4789E51AA1A3BC00F2F883 /* BlockChainStore.xcdatamodeld */; };
 		0A4BBC461A0DCDD000838450 /* BitcoinSerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4BBC451A0DCDD000838450 /* BitcoinSerializable.swift */; };
 		0A4BBC471A0DCDD000838450 /* BitcoinSerializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4BBC451A0DCDD000838450 /* BitcoinSerializable.swift */; };
-		0A4DFFD31BDF55040010BF86 /* NSManagedObjectContext+BitcoinSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4DFFD21BDF55040010BF86 /* NSManagedObjectContext+BitcoinSwift.swift */; settings = {ASSET_TAGS = (); }; };
-		0A4DFFD41BDF55040010BF86 /* NSManagedObjectContext+BitcoinSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4DFFD21BDF55040010BF86 /* NSManagedObjectContext+BitcoinSwift.swift */; settings = {ASSET_TAGS = (); }; };
+		0A4DFFD31BDF55040010BF86 /* NSManagedObjectContext+BitcoinSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4DFFD21BDF55040010BF86 /* NSManagedObjectContext+BitcoinSwift.swift */; };
+		0A4DFFD41BDF55040010BF86 /* NSManagedObjectContext+BitcoinSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4DFFD21BDF55040010BF86 /* NSManagedObjectContext+BitcoinSwift.swift */; };
 		0A52ACEB1953979F0041541B /* ECKey.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A52ACE71953979F0041541B /* ECKey.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0A52ACEC1953979F0041541B /* ECKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A52ACE81953979F0041541B /* ECKey.m */; };
 		0A52ACF0195398320041541B /* ECKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A52ACEF195398320041541B /* ECKeyTests.swift */; };
@@ -514,7 +514,9 @@
 				0A2D51C419777320009B6B25 /* BitcoinSwiftLiveTests */,
 				0A52ACCC195397080041541B /* Products */,
 			);
+			indentWidth = 2;
 			sourceTree = "<group>";
+			tabWidth = 2;
 			usesTabs = 0;
 		};
 		0A52ACCC195397080041541B /* Products */ = {
