@@ -17,7 +17,6 @@ public struct PeerNetworkConfig {
   var network: Message.Network
   var versionMessage: VersionMessage
   var downloadBlockchain: Bool
-  var delegate: PeerNetworkDelegate?
   var blockChainStore: BlockChainStore?
   
   init(seedNodes: [IPAddress],
@@ -27,8 +26,7 @@ public struct PeerNetworkConfig {
     versionMessage: VersionMessage,
     minConnectedNodes: Int = 3,
     downloadBlockchain: Bool = true,
-    blockChainStore: BlockChainStore? = nil,
-    delegate: PeerNetworkDelegate? = nil) {
+    blockChainStore: BlockChainStore? = nil) {
       self.seedNodes = seedNodes
       self.port = port
       self.genesisBlock = genesisBlock
@@ -37,16 +35,16 @@ public struct PeerNetworkConfig {
       self.minConnectedNodes = minConnectedNodes
       self.downloadBlockchain = downloadBlockchain && blockChainStore != nil
       self.blockChainStore = blockChainStore
-      self.delegate = delegate
   }
 }
 
 public protocol PeerNetworkDelegate {
-  func peerManager(peerManager: PeerNetwork, receivedTransaction transaction: Transaction)
+  func peerNetwork(peerNetwork: PeerNetwork, receivedTransaction transaction: Transaction)
 }
 
 public class PeerNetwork {
   private var config: PeerNetworkConfig
+  private var delegate: PeerNetworkDelegate?
   private var maintenanceTimer: NSTimer?
   private var maintenanceRun = 0
   
@@ -106,6 +104,10 @@ public class PeerNetwork {
     }
   }
   
+  public func notifyConfirmationOfTransaction(transaction: Transaction) {
+
+  }
+  
   public func numberOfConnectedPeers() -> Int {
     return connectedPeers().count
   }
@@ -140,6 +142,7 @@ public class PeerNetwork {
     
     // Disconnect to any peers that did not repond to the previous Ping message
     for (_, sentPing) in sentPingMessages {
+      Logger.info("Peer did not reply to ping message. Disconnecting: " + sentPing.peer.description)
       sentPing.peer.disconnect()
     }
     sentPingMessages.removeAll()
@@ -232,6 +235,75 @@ public class PeerNetwork {
 }
 
 extension PeerNetwork {
+  func receivedBlockMessage(blockMessage: Block, fromPeer: PeerConnection) -> MessagePayload? {
+    var responseMessage: MessagePayload? = nil
+    
+    // Process block
+    if config.downloadBlockchain, let blockChainStore = config.blockChainStore {
+      do {
+        if let currentHeader = try blockChainStore.head() {
+          let newWork = currentHeader.chainWork + blockMessage.header.work
+          
+          // Check if the new block matches the chain's head
+          if currentHeader.blockHeader.hash == blockMessage.header.previousBlockHash, let height = try blockChainStore.height() {
+            // Everything seems in place. We can add the new block to the chain.
+            let chainHeader = BlockChainHeader(blockHeader: blockMessage.header, height: height+1, chainWork: newWork)
+            try blockChainStore.addBlockChainHeaderAsNewHead(chainHeader)
+          } else {
+            // Check if the "previous block hash" block is in the chain
+            if let parentHeader = try blockChainStore.blockChainHeaderWithHash(blockMessage.header.previousBlockHash) {
+              let altWork = parentHeader.chainWork + blockMessage.header.work
+              
+              if altWork > newWork {
+                // We received a block that makes the chain longer than it was, so we have to accept it as the new head
+                // We start by removing all blocks after the new block's parent
+                while let headHash = try blockChainStore.head()?.blockHeader.hash where headHash != parentHeader.blockHeader.hash {
+                  try blockChainStore.deleteBlockChainHeaderWithHash(headHash)
+                }
+                // Now that the head points at the new block's parent, we can add the new block as the new head
+                if let height = try blockChainStore.height() {
+                  let chainHeader = BlockChainHeader(blockHeader: blockMessage.header, height: height+1, chainWork: altWork)
+                  try blockChainStore.addBlockChainHeaderAsNewHead(chainHeader)
+                }
+              } else {
+                // This is an orphan block. Let's reject it.
+                responseMessage = RejectMessage(rejectedCommand: blockMessage.command,
+                  code: .Invalid,
+                  reason: "Orphan block",
+                  hash: blockMessage.header.hash)
+                
+                Logger.info("Received orpah block.")
+              }
+            }
+          }
+        }
+      } catch let error as NSError {
+        Logger.warn("Failed adding block to chain: " + error.description)
+      }
+    }
+    
+    // Replay message to all other connected peers
+    for peer in connectedPeers() {
+      if peer !== fromPeer {
+        peer.sendMessageWithPayload(blockMessage)
+      }
+    }
+    
+    return responseMessage
+  }
+  
+  func receivedTransactionMessage(transactionMessage: Transaction, fromPeer: PeerConnection) {
+    // Process transaction
+    // Not implemented
+    
+    // Replay transaction to all other connected peers
+    for peer in connectedPeers() {
+      if peer !== fromPeer {
+        peer.sendMessageWithPayload(transactionMessage)
+      }
+    }
+  }
+  
   func receivedPongMessageWithNonce(nonce: UInt64) {
     if let sentPingMessage = sentPingMessages[nonce] {
       sentPingMessages.removeValueForKey(nonce)
@@ -244,18 +316,20 @@ extension PeerNetwork {
   func receivedInventoryVectors(inventoryVectors: [InventoryVector]) -> GetDataMessage? {
     var inventoryVectorsToRequest = [InventoryVector]()
     
-    for inventoryVector in inventoryVectors {
-      switch inventoryVector.type
+    for currentVector in inventoryVectors {
+      switch currentVector.type
       {
       case .Block:
         // New block dicovered!
         if config.downloadBlockchain {
-          inventoryVectorsToRequest.append(inventoryVector)
+          inventoryVectorsToRequest.append(currentVector)
         }
         
       case .Transaction:
         // New transaction received!
-        // Not implemented
+        if config.downloadBlockchain || delegate != nil {
+          inventoryVectorsToRequest.append(currentVector)
+        }
         break
         
       case .Error:
@@ -294,7 +368,7 @@ extension PeerNetwork: PeerConnectionDelegate {
       Logger.alert("Received alert message: " + alertMessage.alert.message)
       
     case .Block(let blockMessage):
-      // Not implemented
+      responseMessage = receivedBlockMessage(blockMessage, fromPeer: peerConnection)
       break
       
     case .FilterAddMessage(let filterAddMessage):
@@ -364,6 +438,16 @@ extension PeerNetwork: PeerConnectionDelegate {
     if let concreteResponseMessage = responseMessage {
       peerConnection.sendMessageWithPayload(concreteResponseMessage)
     }
+  }
+}
+
+extension PeerNetwork {
+  
+  public var ErrorDomain: String { return "BitcoinSwift.PeerNetwork" }
+  
+  public enum ErrorCode: Int {
+    case Unknown = 0,
+    OrphanBlockReceived
   }
 }
 

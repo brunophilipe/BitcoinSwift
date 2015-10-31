@@ -257,8 +257,6 @@
 		0AF07C761A09ECBD00A0C9F1 /* RejectMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF07C751A09ECBD00A0C9F1 /* RejectMessageTests.swift */; };
 		0AF07C771A09ECBD00A0C9F1 /* RejectMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF07C751A09ECBD00A0C9F1 /* RejectMessageTests.swift */; };
 		0AF9C6F11960D51F009F281D /* NSMutableData+BitcoinEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF9C6F01960D51F009F281D /* NSMutableData+BitcoinEncoding.swift */; };
-		158BEAD31BE2E378001F501C /* PeerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158BEAD21BE2E378001F501C /* PeerManager.swift */; };
-		158BEAD41BE2E378001F501C /* PeerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158BEAD21BE2E378001F501C /* PeerManager.swift */; };
 		D845F45419D7A5FB00346A25 /* PongMessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D845F45319D7A5FB00346A25 /* PongMessageTests.swift */; };
 		D862844D19AA7C0500CFCE80 /* PeerConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF9C6EE195E134C009F281D /* PeerConnection.swift */; };
 		D862845119AA7C0700CFCE80 /* PeerConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF9C6EE195E134C009F281D /* PeerConnection.swift */; };
@@ -435,7 +433,6 @@
 		0AF0E6C4196BAF5A007BC06F /* VersionMessageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VersionMessageTests.swift; sourceTree = "<group>"; };
 		0AF9C6EE195E134C009F281D /* PeerConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeerConnection.swift; sourceTree = "<group>"; };
 		0AF9C6F01960D51F009F281D /* NSMutableData+BitcoinEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSMutableData+BitcoinEncoding.swift"; sourceTree = "<group>"; };
-		158BEAD21BE2E378001F501C /* PeerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeerManager.swift; sourceTree = "<group>"; };
 		D810F30819B50155009EE349 /* GetDataMessageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetDataMessageTests.swift; sourceTree = "<group>"; };
 		D845F45319D7A5FB00346A25 /* PongMessageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PongMessageTests.swift; sourceTree = "<group>"; };
 		D8BA343E19D74E0E00A1232F /* NotFoundMessageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotFoundMessageTests.swift; sourceTree = "<group>"; };
@@ -685,7 +682,6 @@
 				0AC17A7C19E508B2000E4942 /* NotFoundMessage.swift */,
 				0AC17A7D19E508B2000E4942 /* PeerAddress.swift */,
 				0AC17A7019E508B2000E4942 /* PeerAddressMessage.swift */,
-				158BEAD21BE2E378001F501C /* PeerManager.swift */,
 				0AC17A7E19E508B2000E4942 /* PeerServices.swift */,
 				0AC17A7F19E508B2000E4942 /* PingMessage.swift */,
 				0AC17A8019E508B2000E4942 /* PongMessage.swift */,
@@ -1010,7 +1006,6 @@
 				0A5694B61A78AC6C00C5DE2F /* SecureDataStore.swift in Sources */,
 				0AC17A9C19E508B2000E4942 /* Message.swift in Sources */,
 				0A34D5DD19E7B181003A3B89 /* Logger.swift in Sources */,
-				158BEAD31BE2E378001F501C /* PeerManager.swift in Sources */,
 				0AC17A8E19E508B2000E4942 /* BlockHeader.swift in Sources */,
 				0AC17AAE19E508B2000E4942 /* TransactionOutPoint.swift in Sources */,
 				0A110DE819E8FDDE00CBFCAC /* Alert.swift in Sources */,
@@ -1142,7 +1137,6 @@
 				0A5694B71A78AC6C00C5DE2F /* SecureDataStore.swift in Sources */,
 				0AC17A9719E508B2000E4942 /* InventoryMessage.swift in Sources */,
 				0AC17A8D19E508B2000E4942 /* Block.swift in Sources */,
-				158BEAD41BE2E378001F501C /* PeerManager.swift in Sources */,
 				0A34D5DE19E7B181003A3B89 /* Logger.swift in Sources */,
 				0AC17AB119E508B2000E4942 /* TransactionLockTime.swift in Sources */,
 				0AC17AAD19E508B2000E4942 /* TransactionInput.swift in Sources */,
