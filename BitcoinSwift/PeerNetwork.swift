@@ -1,5 +1,5 @@
 //
-//  PeerManager.swift
+//  PeerNetwork.swift
 //  BitcoinSwift
 //
 //  Created by Bruno Philipe on 10/27/15.
@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import BitcoinSwift
 
-public struct PeerManagerConfig {
+public struct PeerNetworkConfig {
   var genesisBlock: SHA256Hash
   var seedNodes: [IPAddress]
   var port: UInt16
@@ -16,7 +17,7 @@ public struct PeerManagerConfig {
   var network: Message.Network
   var versionMessage: VersionMessage
   var downloadBlockchain: Bool
-  var delegate: PeerManagerDelegate?
+  var delegate: PeerNetworkDelegate?
   var blockChainStore: BlockChainStore?
   
   init(seedNodes: [IPAddress],
@@ -27,7 +28,7 @@ public struct PeerManagerConfig {
     minConnectedNodes: Int = 3,
     downloadBlockchain: Bool = true,
     blockChainStore: BlockChainStore? = nil,
-    delegate: PeerManagerDelegate? = nil) {
+    delegate: PeerNetworkDelegate? = nil) {
       self.seedNodes = seedNodes
       self.port = port
       self.genesisBlock = genesisBlock
@@ -40,12 +41,12 @@ public struct PeerManagerConfig {
   }
 }
 
-public protocol PeerManagerDelegate {
-  func peerManager(peerManager: PeerManager, receivedTransaction transaction: Transaction)
+public protocol PeerNetworkDelegate {
+  func peerManager(peerManager: PeerNetwork, receivedTransaction transaction: Transaction)
 }
 
-public class PeerManager {
-  private var config: PeerManagerConfig
+public class PeerNetwork {
+  private var config: PeerNetworkConfig
   private var maintenanceTimer: NSTimer?
   private var maintenanceRun = 0
   
@@ -55,7 +56,7 @@ public class PeerManager {
   private var sentPingMessages = [UInt64 : SentPingMessage]()
   private var pingTimes = [PeerConnection : NSTimeInterval]()
   
-  init(config: PeerManagerConfig) {
+  init(config: PeerNetworkConfig) {
     self.config = config
     
     for ipAddress in config.seedNodes
@@ -67,8 +68,8 @@ public class PeerManager {
   
   // MARK: - Public Methods
   
-  public func kickoff() {
-    Logger.debug("Kicking off PeerManager")
+  public func start() {
+    Logger.debug("Kicking off PeerNetwork")
     
     if maintenanceTimer == nil {
       maintenanceTimer = NSTimer.scheduledTimerWithTimeInterval(30.0,
@@ -77,6 +78,17 @@ public class PeerManager {
         userInfo: nil,
         repeats: true)
       maintenanceTimer?.fire()
+    }
+  }
+  
+  public func stop() {
+    if maintenanceTimer != nil {
+      maintenanceTimer?.invalidate()
+      maintenanceTimer = nil
+      
+      for connectedPeer in connectedPeers() {
+        connectedPeer.disconnect()
+      }
     }
   }
   
@@ -113,7 +125,7 @@ public class PeerManager {
   // MARK: - Maintenance
   
   private func runMaintenance() {
-    Logger.debug("Starting PeerManager maintenance")
+    Logger.debug("Starting PeerNetwork maintenance")
     maintenanceRun++
     
     // If we are connected to less than the configured minimum nodes, contact another one
@@ -219,7 +231,7 @@ public class PeerManager {
   }
 }
 
-extension PeerManager {
+extension PeerNetwork {
   func receivedPongMessageWithNonce(nonce: UInt64) {
     if let sentPingMessage = sentPingMessages[nonce] {
       sentPingMessages.removeValueForKey(nonce)
@@ -263,7 +275,7 @@ extension PeerManager {
   }
 }
 
-extension PeerManager: PeerConnectionDelegate {
+extension PeerNetwork: PeerConnectionDelegate {
   public func peerConnection(peerConnection: PeerConnection, didConnectWithPeerVersion peerVersion: VersionMessage) {
     let getHeadersMessage = GetHeadersMessage(protocolVersion: 70002, blockLocatorHashes: [self.config.genesisBlock])
     peerConnection.sendMessageWithPayload(getHeadersMessage)
