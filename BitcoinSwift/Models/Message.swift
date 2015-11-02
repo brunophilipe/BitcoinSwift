@@ -22,6 +22,8 @@ public func ==(left: Message, right: Message) -> Bool {
 public typealias NetworkMagicNumber = UInt32
 
 public extension NetworkMagicNumber {
+    
+    
   public func magicBytes() -> [UInt8] {
     let data = NSMutableData()
     data.appendUInt32(self)

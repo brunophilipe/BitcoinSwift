@@ -162,9 +162,11 @@ public class PeerConnection: NSObject, NSStreamDelegate, MessageParserDelegate {
   /// dedicated background thread.
   public func sendMessageWithPayload(payload: MessagePayload) {
     let message = Message(network: network, payload: payload)
-    networkThread.addOperationWithBlock {
-      self.messageSendQueue.append(message)
-      self.send()
+    if networkThread.executing {
+      networkThread.addOperationWithBlock {
+        self.messageSendQueue.append(message)
+        self.send()
+      }
     }
   }
 
@@ -416,7 +418,7 @@ public class PeerConnection: NSObject, NSStreamDelegate, MessageParserDelegate {
       if bytesWritten > 0 {
         pendingSendBytes.removeRange(0..<bytesWritten)
       }
-      if messageSendQueue.count > 0 || pendingSendBytes.count > 0 {
+      if networkThread.executing && (messageSendQueue.count > 0 || pendingSendBytes.count > 0) {
         networkThread.addOperationWithBlock {
           self.send()
         }
@@ -442,7 +444,7 @@ public class PeerConnection: NSObject, NSStreamDelegate, MessageParserDelegate {
     let bytesRead = inputStream.read(&readBuffer, maxLength: readBuffer.count)
     if bytesRead > 0 {
       messageParser.parseBytes([UInt8](readBuffer[0..<bytesRead]))
-      if inputStream.hasBytesAvailable {
+      if networkThread.executing && inputStream.hasBytesAvailable {
         networkThread.addOperationWithBlock {
           self.receive()
         }
@@ -460,23 +462,25 @@ public class PeerConnection: NSObject, NSStreamDelegate, MessageParserDelegate {
     setStatus(.Disconnecting)
     connectionTimeoutTimer?.invalidate()
     connectionTimeoutTimer = nil
-    networkThread.addOperationWithBlock {
-      self.inputStream?.close()
-      self.outputStream?.close()
-      self.inputStream?.removeFromRunLoop(NSRunLoop.currentRunLoop(),
-                                          forMode: NSDefaultRunLoopMode)
-      self.outputStream?.removeFromRunLoop(NSRunLoop.currentRunLoop(),
-                                           forMode: NSDefaultRunLoopMode)
-      self.peerVersion = nil
-      self.receivedVersionAck = false
-      self.setStatus(.NotConnected)
-      self.delegateQueue.addOperationWithBlock {
-        // For some reason, using self.delegate? within a block doesn't compile... Xcode bug?
-        if let delegate = self.delegate {
-          delegate.peerConnection(self, didDisconnectWithError: error)
+    if networkThread.executing {
+      networkThread.addOperationWithBlock {
+        self.inputStream?.close()
+        self.outputStream?.close()
+        self.inputStream?.removeFromRunLoop(NSRunLoop.currentRunLoop(),
+          forMode: NSDefaultRunLoopMode)
+        self.outputStream?.removeFromRunLoop(NSRunLoop.currentRunLoop(),
+          forMode: NSDefaultRunLoopMode)
+        self.peerVersion = nil
+        self.receivedVersionAck = false
+        self.setStatus(.NotConnected)
+        self.delegateQueue.addOperationWithBlock {
+          // For some reason, using self.delegate? within a block doesn't compile... Xcode bug?
+          if let delegate = self.delegate {
+            delegate.peerConnection(self, didDisconnectWithError: error)
+          }
         }
+        self.networkThread.cancel()
       }
-      self.networkThread.cancel()
     }
   }
 
