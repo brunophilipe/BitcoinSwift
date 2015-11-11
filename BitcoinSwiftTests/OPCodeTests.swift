@@ -18,9 +18,9 @@ class OPCodeTests: XCTestCase {
   }
   
   func testEqual() {
-    XCTAssertEqual(OPCode.OP_0, OPCode.OP_FALSE)
-    XCTAssertNotEqual(OPCode.OP_2, OPCode.OP_14)
-    XCTAssertEqual(OPCode(rawValue: 81)!, OPCode.OP_TRUE)
+    XCTAssertEqual(OPCode._0, OPCode.False)
+    XCTAssertNotEqual(OPCode._2, OPCode._14)
+    XCTAssertEqual(OPCode(rawValue: 81)!, OPCode.True)
   }
   
   func testGreaterThan() {
