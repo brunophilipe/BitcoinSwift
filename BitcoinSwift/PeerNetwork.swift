@@ -102,7 +102,6 @@ public class PeerNetwork {
       peers.forEach({ (peer) -> () in
         peer.sendMessageWithPayload(transaction)
       })
-      
       return true
     } else {
       return false
@@ -392,8 +391,10 @@ extension PeerNetwork { // Network message handlers
       {
       case .Block:
         // New block dicovered!
-        if config.downloadBlockchain {
-          inventoryVectorsToRequest.append(currentVector)
+        if config.downloadBlockchain || delegate != nil, let blockChainStore = config.blockChainStore {
+          if (try? blockChainStore.blockChainHeaderWithHash(currentVector.hash)) == nil {
+            inventoryVectorsToRequest.append(currentVector)
+          }
         }
         
       case .Transaction:
