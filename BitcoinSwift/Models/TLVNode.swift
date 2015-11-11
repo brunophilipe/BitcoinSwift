@@ -60,20 +60,20 @@ public enum TLVClass: UInt8
 
 public class TLVNode
 {
-	var length: Int = 0
-	var tag: TLVClass.RawValue = TLVClass.EOC.rawValue
-	var tagString: String? = nil
-	var data: NSData? = nil
-	var nodeData: NSData? = nil
-	var children = [TLVNode]()
-	
+	internal var _length: Int = 0
+	internal var _tag: TLVClass.RawValue = TLVClass.EOC.rawValue
+	internal var _tagString: String? = nil
+	internal var _data: NSData? = nil
+	internal var _nodeData: NSData? = nil
+	internal var _children = [TLVNode]()
+  
 	public static func nodeWithData(data: NSData) -> TLVNode?
 	{
 		let (result, _) = TLVNode.constructFromData(data)
 		return result
 	}
 	
-	private static func constructFromData(data: NSData) -> (node: TLVNode?, bytesRead: Int)
+	public static func constructFromData(data: NSData) -> (node: TLVNode?, bytesRead: Int)
 	{
 		if data.length > 2
 		{
@@ -86,7 +86,7 @@ public class TLVNode
 			data.getBytes(&byteTag, length: 1)
 			bytesRead++
 			
-			node.tag = TLVClass(rawValue: byteTag)?.rawValue ?? byteTag
+			node._tag = TLVClass(rawValue: byteTag)?.rawValue ?? byteTag
 			var string_tag = String(format: "%02X", byteTag)
 			
 			if (byteTag & TLVClass.LongTag.rawValue) == TLVClass.LongTag.rawValue
@@ -100,7 +100,7 @@ public class TLVNode
 				while (byteTag & 1<<7 > 0)
 			}
 			
-			node.tagString = string_tag
+			node._tagString = string_tag
 			
 			data.getBytes(&byteLength, range: NSMakeRange(bytesRead, 1))
 			bytesRead++
@@ -132,7 +132,7 @@ public class TLVNode
 				length = Int(byteLength)
 			}
 			
-			node.length = length
+			node._length = length
 			
 			if data.length == bytesRead
 			{
@@ -145,7 +145,7 @@ public class TLVNode
 			
 			if !isConstructed
 			{
-				node.data = data.subdataWithRange(NSMakeRange(bytesRead, Int(length)))
+				node._data = data.subdataWithRange(NSMakeRange(bytesRead, Int(length)))
 				bytesRead += Int(length)
 			}
 			else
@@ -173,17 +173,17 @@ public class TLVNode
 				
 				if failedParse
 				{
-					node.data = data.subdataWithRange(NSMakeRange(bytesRead, length))
+					node._data = data.subdataWithRange(NSMakeRange(bytesRead, length))
 					bytesRead += length
 				}
 				else
 				{
 					bytesRead += bytesReadChildren
-					node.children = children
+					node._children = children
 				}
 			}
 			
-			node.nodeData = data
+			node._nodeData = data
 			return (node, bytesRead)
 		}
 		else
@@ -202,7 +202,7 @@ public class TLVNode
 			let range = NSMakeRange(bytesReadTotal, data.length - bytesReadTotal)
 			let (node, bytesRead) = TLVNode.constructFromData(data.subdataWithRange(range))
 			
-			if let sNode = node where sNode.tag != TLVClass.EOC.rawValue
+			if let sNode = node where sNode._tag != TLVClass.EOC.rawValue
 			{
 				nodes.append(sNode)
 			}
@@ -228,9 +228,9 @@ public class TLVNode
 		
 		tag = tag.uppercaseString
 		
-		for child in children
+		for child in _children
 		{
-			if let childTag = child.tagString where childTag == tag
+			if let childTag = child._tagString where childTag == tag
 			{
 				node = child
 				break
@@ -239,9 +239,9 @@ public class TLVNode
 		
 		if node == nil && recursive
 		{
-			for child in children
+			for child in _children
 			{
-				if let grandchild = child.findChildWithTagString(tag, recursive: recursive) where grandchild.tagString == tag
+				if let grandchild = child.findChildWithTagString(tag, recursive: recursive) where grandchild._tagString == tag
 				{
 					node = child
 					break
@@ -256,10 +256,10 @@ public class TLVNode
 	{
 		var childrenDescription = ""
 		
-		if self.children.count > 0
+		if self._children.count > 0
 		{
 			childrenDescription = "\n\(NSString.stringWithTabCharacters(level))(\n"
-			for child in self.children
+			for child in self._children
 			{
 				childrenDescription += String(format: "%@%@,\n",
 					NSString.stringWithTabCharacters(level + 1),
@@ -275,8 +275,30 @@ public class TLVNode
 		}
 		
 		let pointerAddress = String(format: "0x%p", unsafeAddressOf(self))
-		return "<TLVNode:\(pointerAddress) tag:\(self.tagString) length:\(self.length) bytes:\(self.data ?? "null")) children:\(childrenDescription)>"
+		return "<TLVNode:\(pointerAddress) tag:\(self._tagString) length:\(self._length) bytes:\(self._data ?? "null")) children:\(childrenDescription)>"
 	}
+}
+
+extension TLVNode { // Public accessors
+  public var length: Int {
+    return _length
+  }
+  
+  public var tag: TLVClass.RawValue {
+    return _tag
+  }
+  
+  public var tagString: String? {
+    return _tagString
+  }
+  
+  public var data: NSData? {
+    return _data
+  }
+  
+  public var children: [TLVNode] {
+    return _children
+  }
 }
 
 extension TLVNode : CustomStringConvertible
