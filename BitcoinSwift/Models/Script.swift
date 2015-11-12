@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum ScriptToken {
+public enum ScriptToken: Equatable {
   case Operation(OPCode)
   case Data(NSData)
 }
@@ -24,7 +24,7 @@ public func ==(lhs: ScriptToken, rhs: ScriptToken) -> Bool {
   }
 }
 
-extension ScriptToken: Equatable {
+extension ScriptToken {
   public func description() -> String {
     switch self {
     case .Operation(let code):
