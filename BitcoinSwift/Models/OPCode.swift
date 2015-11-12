@@ -157,14 +157,10 @@ public enum OPCode: UInt8, Comparable {
   case InvalidOpCode = 255
   
   public static var True: OPCode {
-    get {
-      return _1
-    }
+    return ._1
   }
   
   public static var False: OPCode {
-    get {
-      return _0
-    }
+    return ._0
   }
 }
